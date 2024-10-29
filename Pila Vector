@@ -1,0 +1,138 @@
+import java.util.Scanner;
+
+public class PilaVector{
+
+    private int[] elementos;
+    private int tope;
+    private int tamaño;
+
+    public PilaVector(int tam) {
+        this.tamaño = tam;
+        this.elementos = new int[tamaño];
+        this.tope = -1;
+    }
+
+    // Método para insertar un elemento a la pila
+    public void apilar(int dato) {
+        if (llena()) {
+            System.out.println("La pila está llena!");
+            return;
+        }
+        tope++;
+        elementos[tope] = dato;
+    }
+
+    // Método para eliminar un elemento de la pila
+    public int desapilar() {
+        if (vacia()) {
+            System.out.println("La pila está vacía!");
+            return -1; // Valor inválido para indicar que no hubo elemento a desapilar
+        }
+        int dato = elementos[tope];
+        tope--;
+        return dato;
+    }
+
+    // Método para obtener el elemento en el tope de la pila
+    public int obtenerTope() {
+        if (vacia()) {
+            System.out.println("La pila está vacía!");
+            return -1; // Valor inválido para indicar que no hay tope
+        }
+        return elementos[tope];
+    }
+
+    // Método para mostrar los elementos de la pila
+    public void mostrarElementos() {
+        if (vacia()) {
+            System.out.println("La pila está vacía!");
+            return;
+        }
+        System.out.println("Elementos de la pila:");
+        for (int i = tope; i >= 0; i--) {
+            System.out.print(elementos[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // Método para verificar si la pila está vacía
+    public boolean vacia() {
+        return tope == -1;
+    }
+
+    // Método para verificar si la pila está llena
+    public boolean llena() {
+        return tope == tamaño - 1;
+    }
+
+    // Método para obtener el tamaño de la pila
+    public int obtenerTamaño() {
+        return tamaño;
+    }
+
+    // Método para vaciar la pila
+    public void vaciar() {
+        tope = -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int tam, opcion, dato;
+
+        System.out.print("Ingrese el tamaño de la pila: ");
+        tam = scanner.nextInt();
+
+        PilaVector pila = new PilaVector(tam);
+
+        do {
+            System.out.println("\nMenú:");
+            System.out.println("1. Apilar");
+            System.out.println("2. Desapilar");
+            System.out.println("3. Obtener Tope");
+            System.out.println("4. Mostrar Elementos");
+            System.out.println("5. Vacía");
+            System.out.println("6. Llena");
+            System.out.println("7. Tamaño");
+            System.out.println("8. Vaciar Pila");
+            System.out.println("0. Salir");
+            System.out.print("Ingrese una opción: ");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el dato a apilar: ");
+                    dato = scanner.nextInt();
+                    pila.apilar(dato);
+                    break;
+                case 2:
+                    System.out.println("Dato desapilado: " + pila.desapilar());
+                    break;
+                case 3:
+                    System.out.println("Tope de la pila: " + pila.obtenerTope());
+                    break;
+                case 4:
+                    pila.mostrarElementos();
+                    break;
+                case 5:
+                    System.out.println("La pila está vacía: " + (pila.vacia() ? "Sí" : "No"));
+                    break;
+                case 6:
+                    System.out.println("La pila está llena: " + (pila.llena() ? "Sí" : "No"));
+                    break;
+                case 7:
+                    System.out.println("Tamaño de la pila: " + pila.obtenerTamaño());
+                    break;
+                case 8:
+                    pila.vaciar();
+                    System.out.println("Pila vaciada!");
+                    break;
+                case 0:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción inválida!");
+            }
+        } while (opcion != 0);
+        scanner.close();
+    }
+}
